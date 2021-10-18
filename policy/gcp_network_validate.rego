@@ -15,7 +15,7 @@ deny[msg] {
 
 	msg := sprintf("%v has an invalid region : %v", [
 		rs[_].address,
-		rs[_].values.region,
+		region,
 	])
 }
 

@@ -22,7 +22,7 @@ deny[msg] {
 
 	msg := sprintf("%v has an invalid machine type : %v", [
 		rs[_].address,
-		rs[_].values.machine_type,
+		machine_type,
 	])
 }
 
@@ -36,7 +36,7 @@ deny[msg] {
 
 	msg := sprintf("%v has an invalid machine type : %v", [
 		rs[_].address,
-		rs[_].values.boot_disk[_].initialize_params[_].image,
+		image,
 	])
 }
 

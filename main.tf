@@ -127,7 +127,7 @@ resource "google_storage_bucket" "gcs" {
     }
 
     action {
-      type = "DELETE"
+      type = "Delete"
     }
   }
 

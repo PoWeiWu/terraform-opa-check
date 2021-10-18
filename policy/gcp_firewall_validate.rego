@@ -13,7 +13,7 @@ deny[msg] {
 
 	msg := sprintf("%v has an invalid source ranges : %v", [
 		rs[_].address,
-		rs[_].values.source_ranges,
+		source_ranges,
 	])
 }
 
