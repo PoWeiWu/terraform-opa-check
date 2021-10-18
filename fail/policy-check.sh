@@ -1,9 +1,7 @@
 #!/bin/bash
 
-rule_name=$1
-check_data=$2
+check_data=$1
 
-echo "$rule_name"
 echo "$check_data"
 
 # echo "terraform init"
@@ -18,18 +16,24 @@ terraform show -json tfplan.binary > $check_data
 rm -f tfplan.binary
 
 echo "Policy Check"
-opa eval -d policy/ -i $check_data --fail-defined "data.terraform.gcp.instance.deny" --format pretty || check_state=$?
+# opa eval -d policy/ -i $check_data --fail-defined "data.terraform.gcp.instance.deny" --format pretty || check_state=$?
+# conftest test tfplan.json --fail-on-warn -p policy/ --all-namespaces || check_state=$? 
+conftest test $check_data --fail-on-warn -p policy/ --all-namespaces || check_state=$? 
 
-if [ "$check_state" = '1' ]
+if [ "$check_state" = '2' ]
 then
     echo "policy check fail"
+    rm -f $check_data
     exit 0
 elif [[ "$check_state" = '1' ]]
 then
     echo "opa code error"
+    rm -f $check_data
+    exit 0
 else
     echo "pass"
-    terraform apply -auto-approve
+    # terraform apply -auto-approve
+    rm -f $check_data
 fi
 
 

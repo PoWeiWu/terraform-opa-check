@@ -16,12 +16,12 @@ rs := resources("google_compute_instance")
 deny[msg] {
 	
 	# rs := resources("google_compute_instance")
-	machine_type := rs[_].values.machine_type
+	machine_type := rs[name].values.machine_type
 
     not valid_machine_type(machine_type, allowed_machine_type)
 
 	msg := sprintf("%v has an invalid machine type : %v", [
-		rs[_].address,
+		rs[name].address,
 		machine_type,
 	])
 }
@@ -30,12 +30,12 @@ deny[msg] {
 deny[msg] {
 	
 	# rs := resources("google_compute_instance")
-	image := rs[_].values.boot_disk[_].initialize_params[_].image
+	image := rs[name].values.boot_disk[_].initialize_params[_].image
 
     not valid_image(image, allowed_image)
 
 	msg := sprintf("%v has an invalid machine type : %v", [
-		rs[_].address,
+		rs[name].address,
 		image,
 	])
 }

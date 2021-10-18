@@ -8,11 +8,11 @@ rs := resources("google_compute_firewall")
 # validate firewall rule
 deny[msg] {
 	
-    source_ranges := rs[_].values.source_ranges
+    source_ranges := rs[name].values.source_ranges
     validate_fw_source_ranges(source_ranges, "0.0.0.0/0")
 
 	msg := sprintf("%v has an invalid source ranges : %v", [
-		rs[_].address,
+		rs[name].address,
 		source_ranges,
 	])
 }

@@ -23,17 +23,6 @@ resource "google_compute_subnetwork" "subnet" {
   }
 }
 
-# resource "google_compute_firewall" "ping" {
-#   name    = "ping"
-#   network = google_compute_network.vpc.id
-
-#   allow {
-#     protocol = "icmp"
-#   }
-
-#   source_ranges = ["0.0.0.0/0"]
-# }
-
 resource "google_compute_firewall" "ssh" {
   name    = "allow-ssh"
   network = google_compute_network.vpc.id
@@ -43,30 +32,9 @@ resource "google_compute_firewall" "ssh" {
     ports    = ["22"]
   }
 
-  source_ranges = ["0.0.0.0/0"]
+  source_ranges = ["8.8.0.0/24"]
   target_tags   = ["ssh"]
 }
-
-# resource "google_compute_instance" "gce" {
-#   name         = var.instance_name
-#   machine_type = var.machine_type
-#   zone         = var.zone
-
-#   boot_disk {
-#     initialize_params {
-#       image = "rhel-cloud/rhel-7"
-#     }
-#   }
-#   network_interface {
-#     network    = google_compute_network.vpc.id
-#     subnetwork = google_compute_subnetwork.subnet.id
-
-#     access_config {
-#       // Ephemeral public IP
-#     }
-#   }
-#   tags = ["ssh"]
-# }
 
 resource "google_compute_instance" "gce" {
   name         = var.instance_name
@@ -114,7 +82,7 @@ resource "google_compute_instance" "gce_l" {
 resource "google_storage_bucket" "gcs" {
   name     = "gcs-tf-lab-${random_id.random_bucket_name.hex}"
   location = "ASIA"
-
+  # location = "US"
   force_destroy = false
 
   versioning {

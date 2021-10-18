@@ -8,25 +8,25 @@ rs := resources("google_storage_bucket")
 
 deny[msg] {
 	
-	bucket_location := rs[_].values.location
+	bucket_location := rs[name].values.location
     
     not valid_bucket_location(bucket_location, allowed_bucket_location)
 
 	msg := sprintf("%v has an invalid machine type : %v", [
-		rs[_].address,
-		rs[_].values.location,
+		rs[name].address,
+		bucket_location,
 	])
 }
 
 #force destroy deny
 deny[msg] {
 	
-	force_destroy := rs[_].values.force_destroy
+	force_destroy := rs[name].values.force_destroy
     
     force_destroy != false
 
 	msg := sprintf("%v force destroy must be false", [
-		rs[_].address,
+		rs[name].address,
 	])
 }
 
