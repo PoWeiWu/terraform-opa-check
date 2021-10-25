@@ -21,6 +21,8 @@ echo "Policy Check"
 # opa eval -d policy/ -i $check_data --fail-defined "data.terraform.gcp.instance.deny" --format pretty || check_state=$?
 conftest test $check_data --fail-on-warn -p policy/ --all-namespaces -o table || check_state=$? 
 
+sleep 4
+
 if [ "$check_state" = '2' ]
 then
     echo "policy check fail"
@@ -33,7 +35,7 @@ then
     exit 0
 else
     echo "pass"
-    terraform apply -auto-approve
+    # terraform apply -auto-approve
     rm -f $check_data
 fi
 

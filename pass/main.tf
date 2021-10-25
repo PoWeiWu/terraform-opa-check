@@ -58,7 +58,7 @@ resource "google_compute_instance" "gce" {
 }
 
 resource "google_compute_instance" "gce_l" {
-  name         = var.instance_name
+  name         = "my-vm-l"
   machine_type = var.machine_type
   zone         = var.zone
 
